@@ -8,34 +8,34 @@
 
 image_topic: "camera_node/image/compressed"
 
-img_size: [640, 480]  # TODO
-top_cutoff: 0.0       # TODO
+img_size: [320, 240]  # TODO
+top_cutoff: 0.4       # TODO
 
 colors:
   WHITE:
-    low:  [0, 0, 0]        # TODO
+    low:  [0, 0, 128]        # TODO
     high: [180, 255, 255]  # TODO
 
   YELLOW:
-    low:  [0, 0, 0]        # TODO
-    high: [180, 255, 255]  # TODO
+    low:  [20, 85, 85]        # TODO
+    high: [40, 255, 255]  # TODO
 
   RED:
-    low_1:  [0, 0, 0]        # TODO
-    high_1: [180, 255, 255]  # TODO
-    low_2:  [0, 0, 0]        # TODO
+    low_1:  [0, 85, 85]        # TODO
+    high_1: [10, 255, 255]  # TODO
+    low_2:  [170, 85, 85]        # TODO
     high_2: [180, 255, 255]  # TODO
 
-dilation_kernel_size: 1  # TODO
-erode_iterations: 0      # TODO
-dilate_iterations: 0     # TODO
+dilation_kernel_size: 3  # TODO
+erode_iterations: 2      # TODO
+dilate_iterations: 3     # TODO
 
-canny_thresholds: [0, 255]  # TODO
+canny_thresholds: [50, 100]  # TODO
 canny_aperture_size: 3
 hough:
-  threshold: 1        # TODO
-  min_line_length: 1  # TODO
-  max_line_gap: 1     # TODO
+  threshold: 10        # TODO
+  min_line_length: 15  # TODO
+  max_line_gap: 7     # TODO
 
 normal_probe_px: 2
 
