@@ -150,19 +150,21 @@ class LaneDetectorNode:
 
         # TODO (Part II): resize to (self.img_w, self.img_h), THEN slice off
         # the top self.cutoff_rows rows. That order matters!
-        cropped = None
+        bgr_resized = cv2.resize(bgr, (self.img_w, self.img_h))
+        cropped = bgr_resized[self.cutoff_rows:]
 
         # TODO (Part II): BGR to HSV.
-        hsv = None
+        hsv = cv2.cvtColor(cropped, cv2.COLOR_BGR2HSV)
 
         # TODO (Part II): a cleaned mask per color. self.colors maps name ->
         # ColorRange; erode then dilate with self.kernel and the iteration
         # counts from the param file. The dilation is what makes the mask reach
         # the Canny edges on its boundary.
-        masks = {}
+        masks = {name:color.mask(hsv) for name,color in self.colors.items()}
 
         # TODO (Part III): Find edges once, not once per color.
-        edges = None
+        blurred = cv2.GaussianBlur(cropped, (5, 5), 0)
+        edges = cv2.Canny(blurred, self.canny_thresholds[0], self.canny_thresholds[1], apertureSize=3)
 
         detections = {}
         for name, mask in masks.items():
