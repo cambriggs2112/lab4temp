@@ -14,7 +14,7 @@ import rospy
 from cv_bridge import CvBridge
 from sensor_msgs.msg import Image, CompressedImage
 from std_srvs.srv import SetBool, SetBoolResponse
-from duckietown_msgs.msg import Segment, SegmentList
+from duckietown_msgs.msg import Segment, SegmentList, Vector2D
 
 # BGR colors used for drawing debug images.
 DRAW_COLORS = {
@@ -206,7 +206,29 @@ class LaneDetectorNode:
         #   the WHOLE frame, so undo the crop (self.cutoff_rows) before dividing
         #   by the resized size (self.img_w, self.img_h). Which height you
         #   divide by matters, and getting it wrong does not raise an error.
-        pass
+        msg = SegmentList()
+        msg.header = header
+        segments = []
+        for name, detection in detections:
+            seg = Segment()
+            seg.color = 0 if name=="WHITE" else 1 if name=="YELLOW" else 2 #if name=="RED"
+            lines, normals = detection
+            normlines = np.zeros_like(lines)
+            normlines[:,0::2] = lines[:,0::2]/self.img_w # rescale x
+            normlines[:,1::2] = (lines[:,1::2]+self.cutoff_rows)/self.img_h # rescale y
+            pixels_normalized = [Vector2D(), Vector2D()]
+            pixels_normalized[0].x = normlines[:,0]
+            pixels_normalized[0].y = normlines[:,1]
+            pixels_normalized[1].x = normlines[:,2]
+            pixels_normalized[1].y = normlines[:,3]
+            seg.pixels_normalized = pixels_normalized
+            seg.normal[0] = normals[:,0]
+            seg.normal[1] = normals[:,1]
+            segments.append(seg)
+        msg.segments = segments
+
+
+
 
     # ----------------------------------------------------------------------
     # Provided from here down. Read it, but you should not need to edit it.
