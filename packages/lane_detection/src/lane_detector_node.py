@@ -70,8 +70,11 @@ class ColorRange:
     def mask(self, hsv):
         """The binary mask of every pixel of this color."""
         # TODO (Part II): cv2.inRange for each (low, high) in self.bounds,
+        mask = cv2.inRange(hsv, self.bounds[0][0], self.bounds[0][1])
+        for bd in self.bounds:
+            mask = cv2.bitwise_or(mask, cv2.inRange(hsv, bd[0], bd[1]))
         # combined with cv2.bitwise_or.
-        raise NotImplementedError("ColorRange.mask")
+        return mask
 
 
 class LaneDetectorNode:
