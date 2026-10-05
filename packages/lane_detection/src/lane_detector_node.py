@@ -81,7 +81,7 @@ class LaneDetectorNode:
         self.bridge = CvBridge()
 
         # TODO (Part II): segment publisher
-        self.pub_segments = None
+        self.pub_segments = rospy.Publisher("~segment_list", SegmentList, queue_size=1)
 
         # Debug views, rendered only when something is subscribed.
         self.pub_cropped = rospy.Publisher("~image_cropped", Image, queue_size=1)
@@ -97,9 +97,10 @@ class LaneDetectorNode:
         self.pub_lines_all = rospy.Publisher("~image_lines_all", Image, queue_size=1)
 
         # TODO (Part II): image subscriber
-        self.sub_image = None
+        self.sub_image = rospy.Subscriber(self.image_topic, CompressedImage, self.image_cb, queue_size=1, buff_size=2**24)
 
         # TODO (Part II): a rospy.Timer that re-runs get_params every 10 s
+        rospy.Timer(rospy.Duration(10.0), self.get_params)
 
         # We replaced Duckietown's line detector, so we answer its switch
         # service in its place.
