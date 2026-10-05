@@ -179,6 +179,10 @@ class LaneDetectorNode:
                                     threshold=self.colors[name].hough_threshold,
                                     minLineLength=self.colors[name].hough_min_line_length,
                                     maxLineGap=self.colors[name].hough_max_line_gap)
+            if lines is None:
+                lines = np.zeros((0, 4))
+            else:
+                lines = lines.reshape(-1, 4)
 
             normals = self._orient(lines, mask)
             detections[name] = (lines, normals)
@@ -212,7 +216,7 @@ class LaneDetectorNode:
         msg = SegmentList()
         msg.header = header
         segments = []
-        for name, detection in detections:
+        for name, detection in detections.items():
             seg = Segment()
             seg.color = 0 if name=="WHITE" else 1 if name=="YELLOW" else 2 #if name=="RED"
             lines, normals = detection
@@ -225,11 +229,11 @@ class LaneDetectorNode:
             pixels_normalized[1].x = normlines[:,2]
             pixels_normalized[1].y = normlines[:,3]
             seg.pixels_normalized = pixels_normalized
-            seg.normal[0] = normals[:,0]
-            seg.normal[1] = normals[:,1]
+            seg.normal.x = normals[:,0]
+            seg.normal.y = normals[:,1]
             segments.append(seg)
         msg.segments = segments
-
+        self.pub_segments.publish(msg)
 
 
 

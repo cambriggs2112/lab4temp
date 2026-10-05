@@ -13,8 +13,8 @@ top_cutoff: 0.4       # TODO
 
 colors:
   WHITE:
-    low:  [0, 0, 128]        # TODO
-    high: [180, 255, 255]  # TODO
+    low:  [0, 0, 170]        # TODO
+    high: [180, 85, 255]  # TODO
 
   YELLOW:
     low:  [20, 85, 85]        # TODO
