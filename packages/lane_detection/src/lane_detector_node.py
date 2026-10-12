@@ -217,14 +217,14 @@ class LaneDetectorNode:
         msg.header = header
         segments = []
         for name, detection in detections.items():
-            seg = Segment()
-            seg.color = 0 if name=="WHITE" else 1 if name=="YELLOW" else 2 #if name=="RED"
             lines, normals = detection
             normlines = np.zeros_like(lines)
             normlines[:,0::2] = lines[:,0::2] / float(self.img_w) # rescale x
             normlines[:,1::2] = (lines[:,1::2]+self.cutoff_rows) / float(self.img_h) # rescale y
             pixels_normalized = [Vector2D(), Vector2D()]
             for i in range(len(normlines)):
+                seg = Segment()
+                seg.color = 0 if name=="WHITE" else 1 if name=="YELLOW" else 2 #if name=="RED"
                 pixels_normalized[0].x = normlines[i,0]
                 pixels_normalized[0].y = normlines[i,1]
                 pixels_normalized[1].x = normlines[i,2]
