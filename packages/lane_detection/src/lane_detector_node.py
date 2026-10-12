@@ -221,15 +221,14 @@ class LaneDetectorNode:
             normlines = np.zeros_like(lines)
             normlines[:,0::2] = lines[:,0::2] / float(self.img_w) # rescale x
             normlines[:,1::2] = (lines[:,1::2]+self.cutoff_rows) / float(self.img_h) # rescale y
-            pixels_normalized = [Vector2D(), Vector2D()]
             for i in range(len(normlines)):
                 seg = Segment()
                 seg.color = 0 if name=="WHITE" else 1 if name=="YELLOW" else 2 #if name=="RED"
-                pixels_normalized[0].x = normlines[i,0]
-                pixels_normalized[0].y = normlines[i,1]
-                pixels_normalized[1].x = normlines[i,2]
-                pixels_normalized[1].y = normlines[i,3]
-                seg.pixels_normalized = pixels_normalized
+                # seg.pixels_normalized[0].x = normlines[i,0]
+                seg.pixels_normalized[0].x = lines[i,0] / float(self.img_w)
+                seg.pixels_normalized[0].y = (lines[i,1]+self.cutoff_rows) / float(self.img_h)
+                seg.pixels_normalized[1].x = lines[i,2] / float(self.img_w)
+                seg.pixels_normalized[1].y = (lines[i,3]+self.cutoff_rows) / float(self.img_h)
                 seg.normal.x = normals[i,0]
                 seg.normal.y = normals[i,1]
                 segments.append(seg)
