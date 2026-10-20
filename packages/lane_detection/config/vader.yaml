@@ -18,7 +18,7 @@ colors:
     high: [180, 85, 255]  # TODO
 
   YELLOW:
-    low:  [15, 85, 0]        # TODO
+    low:  [15, 65, 0]        # TODO
     high: [45, 255, 255]  # TODO
 
   RED:
@@ -27,9 +27,9 @@ colors:
     low_2:  [170, 85, 85]        # TODO
     high_2: [180, 255, 255]  # TODO
 
-dilation_kernel_size: 5  # TODO
+dilation_kernel_size: 3  # TODO
 erode_iterations: 2      # TODO
-dilate_iterations: 5     # TODO
+dilate_iterations: 4     # TODO
 
 canny_thresholds: [50, 100]  # TODO
 canny_aperture_size: 3

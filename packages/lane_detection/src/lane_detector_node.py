@@ -187,6 +187,8 @@ class LaneDetectorNode:
             else:
                 lines = lines.reshape(-1, 4)
 
+
+            mask = cv2.erode(masks[name], self.kernel, iterations=3)
             normals = self._orient(lines, mask)
             detections[name] = (lines, normals)
 
