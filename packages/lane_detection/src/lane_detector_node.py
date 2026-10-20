@@ -164,6 +164,9 @@ class LaneDetectorNode:
         # counts from the param file. The dilation is what makes the mask reach
         # the Canny edges on its boundary.
         masks = {name:color.mask(hsv) for name,color in self.colors.items()}
+        for name, mask in masks.items():
+            mask = cv2.erode(mask, self.kernel, iterations=self.erode_iterations) 
+            masks[name] = cv2.dilate(mask, self.kernel, iterations=self.dilate_iterations)
 
         # TODO (Part III): Find edges once, not once per color.
         blurred = cv2.GaussianBlur(cropped, (5, 5), 0)
