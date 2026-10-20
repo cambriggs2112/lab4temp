@@ -47,7 +47,7 @@
     <!-- Lab 5 replaces this with your own controller. For Lab 4 leave
          Duckietown's on: it is what makes the bot actually drive, so you can
          see your detector working at speed. -->
-    <arg name="/lane_following/lane_controller" value="true"/>
+    <arg name="/lane_following/lane_controller" value="false"/>
 
     <arg name="/lane_following/stop_line_filter" value="true"/>
 
